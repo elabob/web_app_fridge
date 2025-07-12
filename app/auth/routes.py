@@ -1,14 +1,15 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
-from app.auth.forms import LoginForm
+from flask import Blueprint, render_template, redirect, url_for, flash, request
+from app.auth.forms import LoginForm, RegisterForm
+from app.models import db, User
+from flask import session
 
 main = Blueprint('main', __name__)
 
 
-# Domovské stránky
+# Domovské stranky
 @main.route('/')
 def index():
-    return render_template("home_sk.html")
-
+    return render_template("welcome.html")  # nová uvítacia stránka
 
 @main.route('/sk')
 def home_sk():
@@ -58,16 +59,40 @@ def items_cz():
 
 
 # Login funkcionalita
+@main.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash('Používateľ už existuje.', 'warning')
+            return redirect(url_for('main.register'))
+
+        new_user = User(username=form.username.data)
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Registrácia úspešná. Môžeš sa prihlásiť.', 'success')
+        return redirect(url_for('main.login'))
+    return render_template('register.html', form=form)
+
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-
-        if username == "admin" and password == "tajneheslo":
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            session['user'] = user.username
             flash('Úspešne prihlásené!', 'success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.home_sk'))
         else:
             flash('Nesprávne meno alebo heslo.', 'danger')
     return render_template('login.html', form=form)
+
+
+@main.route('/logout')
+def logout():
+    session.pop('user', None)
+    flash('Bola si odhlásená.', 'info')
+    return redirect(url_for('main.login'))
