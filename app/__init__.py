@@ -1,12 +1,12 @@
-#starter celej aplikacie - flask potrebuje aplokacny kontext- objekt ktory drzi vsetko pokope
+#vo Flask aplikacii musim mat tzv tajny kluc, ktory Flask-WTF pouzije na ochranu formularov (tokeny)
+from flask import Flask
 
-from flask import Flask         #importuje triedu flask ktora sluzi na vyvtorenie webovej appky
 
-def create_app():       #vytvaram funkciu ktora mi umozni oddelit inicializaciu appky od spustenia
-    app = Flask(__name__, template_folder='templates')   #tymto vytvorim Flask aplikaciu
+def create_app():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'OUN4KRfj5E0jvt9t'
 
-    from .routes import main  #nacitanie cesty z ineho suboru  #zaroven tu inicializujem blueprint- sposob ako organizovat cesty do samostatneho modulu
-
-    app.register_blueprint(main, url_prefix='/')  #pridavam subor main do aplikacie  #zaregistrujem blueprint do aplikacie aby Flask vedel ze su tam definovane trasy (/login,..)
+    from app.auth.routes import main
+    app.register_blueprint(main)
 
     return app
