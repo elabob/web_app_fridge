@@ -1,0 +1,14 @@
+fridge_app/
+│
+├── app/                   # hlavná aplikácia
+│   ├── __init__.py        # inicializácia Flasku
+│   ├── routes.py          # všetky URL adresy
+│   ├── models.py          # databázové tabuľky
+│   ├── forms.py           # formuláre (napr. login)
+│   ├── templates/         # HTML súbory
+│   └── static/            # CSS, obrázky, JS
+│
+├── venv/                  # virtuálne prostredie (PyCharm vytvorí)
+├── config.py              # nastavenia (tajomstvá, databáza)
+├── run.py                 # spúšťa aplikáciu
+└── requirements.txt       # zoznam knižníc

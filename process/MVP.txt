@@ -1,0 +1,22 @@
+2. NÁVRH APLIKÁCIE – FUNKČNÝ MINIMUM (MVP)
+
+Navrhnem minimum, ktoré bude funkčné, ale použiteľné:
+Používateľ
+
+    registrácia / prihlásenie
+
+    môže vlastniť viac chladničiek
+
+    môže chladničku zdieľať s inými používateľmi
+
+Chladnička
+
+    má názov (napr. Na internáte, Doma vo Zvolene)
+
+    má dve sekcie: chladnička a mraznička
+
+    obsahuje položky s menom, množstvom, dátumom expirácie
+
+Nákupný zoznam
+
+    položky na kúpu (meno, poznámka, kto pridal)

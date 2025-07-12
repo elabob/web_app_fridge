@@ -1,0 +1,24 @@
+3. NÁVRH DATABÁZY (ER diagram)
+
+Skicni si to v iPade alebo len v hlave, ale my to hneď premeníme na SQLAlchemy modely:
+Entity (tabuľky):
+
+    User
+
+        id, meno, email, heslo (zahashované)
+
+    Fridge
+
+        id, názov, owner_id
+
+    FridgeItem
+
+        id, názov položky, množstvo, sekcia (chladnička/mraznička), expirácia, fridge_id
+
+    FridgeShare
+
+        id, fridge_id, user_id (kto má prístup)
+
+    ShoppingItem
+
+        id, názov, poznámka, fridge_id, pridane_user_id
