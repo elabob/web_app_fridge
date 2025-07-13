@@ -3,132 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Správa chladničiek</title>
+    <title>Sprava chladniciek</title>
     <style>
+        /* Zakladne resetovanie pre konzistentnost */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Hlavny kontainer - cela obrazovka s pozadim */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #8a8a8a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #191970 0%, #da70d6 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
         }
-        .container {
-            max-width: 800px;
+
+        /* Hlavny wrapper pre obsah */
+        .main-container {
+            max-width: 900px;
             margin: 0 auto;
-            background: #68899f;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .fridge-card {
-            border: 1px solid #9dfff5;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            background: #9dfff5;
+
+        /* Nadpis stranky */
+        .page-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .members {
-            margin-top: 10px;
+
+        /* Karty s priesvitnym pozadim */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .member {
-            display: inline-block;
-            margin-right: 10px;
-            padding: 5px 8px;
-            background: #e3f2fd;
-            border-radius: 3px;
-            font-size: 12px;
-        }
-        .create-form {
-            background: #9dfff5;
-            padding: 20px;
+
+        /* Nadpisy v kartach */
+        .card h2 {
+            font-size: 1.5em;
             margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #c8e6c9;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
         }
+
+        /* Styl pre formulare */
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Styl pre labels */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        /* Styl pre input polia */
+        input[type="text"] {
+            width: 100%;
+            max-width: 350px;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Placeholder text */
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Focus stav pre input polia */
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007AFF;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Hlavne tlacidla */
         .btn {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-        }
-        .btn:hover {
-            background: #45a049;
-        }
-        .btn-link {
-            background: #2196F3;
-            color: white;
-            padding: 8px 16px;
+            transition: all 0.3s ease;
             text-decoration: none;
-            border-radius: 4px;
             display: inline-block;
+            margin: 5px;
+        }
+
+        /* Zelene tlacidlo pre vytvorenie */
+        .btn-primary {
+            background: #007AFF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
+        }
+
+        /* Modre tlacidlo pre linky */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Karty pre jednotlive chladnicky */
+        .fridge-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .fridge-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Nazov chladnicky */
+        .fridge-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        /* Info o chladnicke */
+        .fridge-info {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+
+        /* Kontainer pre clenov */
+        .members-container {
             margin-top: 10px;
         }
-        .btn-link:hover {
-            background: #1976D2;
+
+        .members-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
         }
-        input[type="text"] {
-            width: 300px;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+
+        /* Jednotlivi clenovia */
+        .member-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-right: 8px;
+            margin-bottom: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            font-weight: 500;
         }
+
+        /* Flash spravy */
         .flash-messages {
             margin-bottom: 20px;
         }
-        .flash-success {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #c3e6cb;
+
+        .flash-message {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
+        .flash-success {
+            background: rgba(76, 175, 80, 0.3);
+            color: #ffffff;
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
         .flash-danger {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #f5c6cb;
+            background: rgba(244, 67, 54, 0.3);
+            color: #ffffff;
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        /* Prazdny stav */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+        }
+
+        /* Logout link */
+        .logout-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Animacia pri nacitani */
+        .card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responzivny dizajn */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 10px;
+            }
+
+            .page-title {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            input[type="text"] {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🧊 Správa chladničiek</h1>
+    <div class="main-container">
+        <!-- Hlavny nadpis stranky -->
+        <h1 class="page-title">🧊 Správa chladničiek</h1>
 
-        <!-- Flash messages -->
+        <!-- Flash spravy pre zobrazenie chybovych a uspesnych hlasok -->
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             <div class="flash-messages">
             {% for category, message in messages %}
-              <div class="flash-{{ category }}">{{ message }}</div>
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
             {% endfor %}
             </div>
           {% endif %}
         {% endwith %}
 
-        <div class="create-form">
+        <!-- Formular pre vytvorenie novej chladnicky -->
+        <div class="card">
             <h2>➕ Vytvoriť novú chladničku</h2>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                <p>
-                    {{ form.name.label }}<br>
-                    {{ form.name(size=32) }}
-                </p>
-                <p>{{ form.submit(class="btn") }}</p>
+            <form method="POST" class="form-container">
+                {{ form.hidden_tag() }}  <!-- CSRF token pre bezpecnost -->
+
+                <div class="form-group">
+                    {{ form.name.label }}
+                    {{ form.name(size=32, placeholder="Názov chladničky...") }}
+                </div>
+
+                {{ form.submit(class="btn btn-primary") }}
             </form>
         </div>
 
-        <div class="fridges-list">
+        <!-- Zoznam existujucich chladniciek -->
+        <div class="card">
             <h2>📋 Vaše chladničky</h2>
+
             {% if fridges %}
+                <!-- Ak existuju chladnicky, zobrazi ich -->
                 {% for fridge in fridges %}
-                    <div class="fridge-card">
-                        <h3>🧊 {{ fridge.name }}</h3>
-                        <p><strong>Vytvorené:</strong> {{ fridge.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
-                        <div class="members">
-                            <strong>👥 Členovia:</strong><br>
+                    <div class="fridge-item">
+                        <div class="fridge-name">🧊 {{ fridge.name }}</div>
+                        <div class="fridge-info">
+                            <strong>Vytvorené:</strong> {{ fridge.created_at.strftime('%d.%m.%Y %H:%M') }}
+                        </div>
+
+                        <!-- Zoznam clenov chladnicky -->
+                        <div class="members-container">
+                            <div class="members-title">👥 Členovia:</div>
                             {% for member in fridge.members %}
-                                <span class="member">
+                                <span class="member-tag">
                                     {{ member.user.username }}
                                     {% if member.role == 'admin' %}
                                         👑 (Admin)
@@ -138,22 +346,27 @@
                                 </span>
                             {% endfor %}
                         </div>
-                        <a href="{{ url_for('auth.fridge_detail', fridge_id=fridge.id) }}" class="btn-link">
+
+                        <!-- Tlacidlo pre otvorenie chladnicky -->
+                        <a href="{{ url_for('auth.fridge_detail', fridge_id=fridge.id) }}" class="btn btn-secondary">
                             Otvoriť chladničku →
                         </a>
                     </div>
                 {% endfor %}
             {% else %}
-                <div class="fridge-card">
+                <!-- Ak neexistuju chladnicky, zobrazi prazdny stav -->
+                <div class="empty-state">
                     <p>🤷‍♀️ Nemáte žiadne chladničky. Vytvorte si prvú!</p>
                 </div>
             {% endif %}
         </div>
 
-        <hr style="margin: 30px 0;">
-        <p>
-            <a href="{{ url_for('auth.logout') }}" style="color: #ffffff;"> <strong>Odhlásiť sa</strong><br></a>
-        </p>
+        <!-- Sekcia pre odhlasenie -->
+        <div class="logout-section">
+            <a href="{{ url_for('auth.logout') }}" class="logout-link">
+                <strong>Odhlásiť sa</strong>
+            </a>
+        </div>
     </div>
 </body>
 </html>

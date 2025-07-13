@@ -1,39 +1,168 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitajte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* hlavny kontainer-cela obrazovka */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #191970 0%, #da70d6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Hlavny card/box v strede */
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        /* Hlavny nadpis */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Podnadpis */
+        .subtitle {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Kontainer pre tlacitka */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Zakladny styl pre tlacitka */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* primarne tlacitko (prihlasit sa) */
+        .btn-primary {
+            background: #007AFF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
+        }
+
+        /* registrovat sa */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* animacia pri nacitani stranky */
+        .welcome-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* dizajn pre mobily */
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        /* Efekt pri kliknuti */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
-<style>
-    .form-group {
-            margin-bottom: 20px;             /* Odstup medzi poliami */
-        }
+    <!-- Hlavny kontainer -->
+    <div class="welcome-card">
+        <!-- Nadpis -->
+        <h1>Vitajte!</h1>
 
-        label {
-            display: block;                  /* Každý label na novom riadku */
-            margin-bottom: 5px;              /* Spodný odstup */
-            font-weight: bold;               /* Tučné písmo */
-            color: #333;
-        }
+        <!-- Podnadpis -->
+        <p class="subtitle">Začnite svoje organizovanie. 🤍<br>Prihláste sa alebo vytvorte nový účet.</p>
 
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;                     /* Celá šírka */
-            padding: 10px;                   /* Vnútorný odstup */
-            border: 1px solid #ddd;          /* Sivý okraj */
-            border-radius: 4px;              /* Zaoblené rohy */
-            font-size: 16px;                 /* Veľkosť písma */
-            box-sizing: border-box;          /* Počíta padding do šírky */
-        }
-
-        input:focus {
-            border-color: #4CAF50;           /* Zelený okraj pri fokuse */
-            outline: none;                   /* Odstráni default outline */
-        }
-
-    <h1>Vitajte na našej stránke!</h1>
-    <p>Vyberte si možnosť:</p>
-    <a href="{{ url_for('auth.login') }}"><button>Prihlásiť sa</button></a>
-    <a href="{{ url_for('auth.register') }}"><button>Registrovať sa</button></a>
+        <!-- Tlačidlá -->
+        <div class="button-container">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+                Prihlásiť sa
+            </a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-secondary">
+                Registrovať sa
+            </a>
+        </div>
+    </div>
 </body>
 </html>

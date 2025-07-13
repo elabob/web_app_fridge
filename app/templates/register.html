@@ -1,32 +1,297 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracia</title>
+    <style>
+        /* Zakladne resetovanie pre konzistenciu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block content %}
-  <h2>Registrácia</h2>
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    
-    <div>
-      {{ form.username.label }}<br>
-      {{ form.username(size=32) }}
-    </div>
-    
-    <div>
-      {{ form.email.label }}<br>
-      {{ form.email(size=32) }}
-    </div>
+        /* Hlavny kontainer - cela obrazovka s pozadim */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #191970 0%, #da70d6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
 
-    <div>
-      {{ form.password.label }}<br>
-      {{ form.password(size=32) }}
-    </div>
+        /* Hlavny card/box v strede */
+        .register-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 450px;
+            width: 90%;
+        }
 
-    <div>
-      {{ form.confirm_password.label }}<br>
-      {{ form.confirm_password(size=32) }}
-    </div>
+        /* Hlavny nadpis */
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+        }
 
-    <div>
-      {{ form.submit() }}
+        /* Podnadpis */
+        .subtitle {
+            font-size: 1em;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        /* Kontainer pre form */
+        .form-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Styl pre form grupy */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Styl pre labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        /* Styl pre input polia - jednotny pre vsetky typy */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            /* Odstranenie default stylov prehliadaca */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Placeholder text farba */
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Focus stav pre input polia */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #007AFF;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Submit tlacitko */
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #007AFF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        /* Hover efekt pre submit tlacitko */
+        input[type="submit"]:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
+        }
+
+        /* Link na prihlasenie */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .login-link a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: underline;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Styl pre flash spravy */
+        .flash-messages {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .flash-messages ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .flash-messages li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        /* Specificke farby pre ruzne typy flash sprav */
+        .flash-success {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
+        .flash-danger {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        .flash-info {
+            background: rgba(33, 150, 243, 0.3);
+            border-color: rgba(33, 150, 243, 0.5);
+        }
+
+        /* Animacia pri nacitani stranky */
+        .register-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responzivny dizajn pre mobily */
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+            }
+        }
+
+        /* Skryte polia (pre form.hidden_tag) */
+        input[type="hidden"] {
+            display: none;
+        }
+
+        /* Tooltip alebo pomocny text */
+        .field-help {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hlavny kontainer -->
+    <div class="register-card">
+        <!-- Nadpis -->
+        <h1>Registrácia</h1>
+
+        <!-- Podnadpis -->
+        <p class="subtitle">Vytvorte si nový účet a začnite organizovat svoju chladničku!</p>
+
+        <!-- Formular -->
+        <form method="POST" class="form-container">
+            {{ form.hidden_tag() }}     <!-- Toto vlozi CSRF token -->
+
+            <!-- Meno pouzivatela -->
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(size=32, placeholder="Zadajte používateľské meno") }}
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(size=32, placeholder="vas.email@example.com") }}
+            </div>
+
+            <!-- Heslo -->
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(size=32, placeholder="Zadajte silne heslo") }}
+                <div class="field-help">Heslo by malo mať aspoň 8 znakov</div>
+            </div>
+
+            <!-- Potvrdenie hesla -->
+            <div class="form-group">
+                {{ form.confirm_password.label }}
+                {{ form.confirm_password(size=32, placeholder="Zopakujte heslo") }}
+            </div>
+
+            <!-- Submit tlacitko -->
+            {{ form.submit() }}
+        </form>
+
+        <!-- Link na prihlasenie -->
+        <div class="login-link">
+            <p>Už máte účet? <a href="{{ url_for('auth.login') }}">Prihlásiť sa</a></p>
+        </div>
+
+        <!-- Flash spravy -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+                <ul>
+                {% for category, message in messages %}
+                  <li class="flash-{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
     </div>
-  </form>
-{% endblock %}
+</body>
+</html>

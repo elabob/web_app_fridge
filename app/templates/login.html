@@ -1,28 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        /* Reset zakladnych stylov pre konzistenciu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Hlavny kontainer - cela obrazovka */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #191970 0%, #da70d6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Hlavny card/box v strede */
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        /* Hlavny nadpis */
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Podnadpis */
+        .subtitle {
+            font-size: 1em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Kontainer pre form */
+        .form-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Styl pre form grupy */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Styl pre labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        /* Styl pre input polia - jednotny pre vsetky typy */
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            /* Odstranenie default stylов prehliadaca */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Vynucenie jednotneho vzhľadu */
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Placeholder text farba */
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Focus stav pre input polia */
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007AFF;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Submit tlacitko */
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #007AFF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        /* Hover efekt pre submit tlacitko */
+        input[type="submit"]:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
+        }
+
+        /* Link na reset hesla */
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: underline;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Styl pre flash spravy */
+        .flash-messages {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .flash-messages ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .flash-messages li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+        }
+
+        /* Animacia pri nacitani stranky */
+        .login-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responzivny dizajn pre mobily */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Skryte polia (pre form.hidden_tag) */
+        input[type="hidden"] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Prihlásenie</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}     <!-- Toto vlozi CSRF token -->
-        <p>{{ form.email.label }} {{ form.email() }}</p>
-        <p>{{ form.password.label }} {{ form.password() }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <!-- Hlavny kontainer -->
+    <div class="login-card">
+        <!-- Nadpis -->
+        <h1>Prihlásenie</h1>
 
-    <p><a href="{{ url_for('auth.reset_password_request') }}">Zabudol som heslo</a></p>
+        <!-- Podnadpis -->
+        <p class="subtitle">Vitajte späť! Zadajte svoje údaje.</p>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li><strong>{{ category }}:</strong> {{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+        <!-- Formular -->
+        <form method="POST" class="form-container">
+            {{ form.hidden_tag() }}     <!-- Toto vlozi CSRF token -->
+
+            <!-- Email pole -->
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(placeholder="vas.email@example.com") }}
+            </div>
+
+            <!-- Heslo pole -->
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(placeholder="Zadajte vaše heslo") }}
+            </div>
+
+            <!-- Submit tlacitko -->
+            {{ form.submit() }}
+        </form>
+
+        <!-- Link na reset hesla -->
+        <div class="forgot-password">
+            <p> <a href="{{ url_for('auth.reset_password_request') }}">Zabudnuté heslo</a></p>
+        </div>
+
+        <!-- Link na registraciu -->
+         <div class="login-link">
+            <p>Ešte nemáte účet? <a href="{{ url_for('auth.register') }}">Registrujte sa</a></p>
+        </div>
+
+        <!-- Flash spravy -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+                <ul>
+                {% for category, message in messages %}
+                  <li><strong>{{ category }}:</strong> {{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>
