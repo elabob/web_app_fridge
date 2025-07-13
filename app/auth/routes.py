@@ -1,9 +1,10 @@
 from flask import render_template, redirect, url_for, flash, request
-from .forms import RegistrationForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User
+from .forms import RegistrationForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm, CreateFridgeForm
+from app.models import User, Fridge, FridgeUser
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
+
 from flask import Blueprint
 
 main = Blueprint('auth', __name__)
@@ -69,8 +70,8 @@ def login():
         if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user)
             flash('Úspešne prihlásený!', 'success')
-            # Presmeruj na slovensku domovsku stranku po prihlaseni
-            return redirect(url_for('auth.home_sk'))
+            # Zmeň toto na správu používateľov
+            return redirect(url_for('auth.user_management'))
         else:
             flash('Nesprávny email alebo heslo.', 'danger')
 
@@ -136,3 +137,53 @@ def reset_password():
         return redirect(url_for('auth.login'))
 
     return render_template("reset_password.html", form=form)
+
+
+@main.route('/user_management', methods=['GET', 'POST'])
+@login_required
+def user_management():
+    form = CreateFridgeForm()
+
+    if form.validate_on_submit():
+        new_fridge = Fridge(        #vytvori novu chladnicku
+            name=form.name.data,
+            created_by=current_user.id
+        )
+        db.session.add(new_fridge)
+        db.session.commit()
+
+        fridge_user = FridgeUser(       # pridat pouzivatela ako admin
+            user_id=current_user.id,
+            fridge_id=new_fridge.id,
+            role='admin'
+        )
+        db.session.add(fridge_user)
+        db.session.commit()
+
+        flash('Chladnička bola úspešne vytvorená!', 'success')
+        return redirect(url_for('auth.user_management'))
+
+    # ziskat vsetky chladnicky pouzivatela
+    fridges = db.session.query(Fridge).join(FridgeUser).filter(
+        FridgeUser.user_id == current_user.id
+    ).all()
+
+    return render_template('user_management.html', form=form, fridges=fridges)
+
+
+# Detail chaldnicky - zatial zaklad
+@main.route('/fridge/<int:fridge_id>')
+@login_required
+def fridge_detail(fridge_id):
+    # overim ci ma pouzivatel pristup k danej chladnicke
+    membership = FridgeUser.query.filter_by(
+        user_id=current_user.id,
+        fridge_id=fridge_id
+    ).first()
+
+    if not membership:
+        flash('Nemáte prístup k tejto chladničke!', 'danger')
+        return redirect(url_for('auth.user_management'))
+
+    fridge = Fridge.query.get_or_404(fridge_id)
+    return render_template('fridge_detail.html', fridge=fridge)

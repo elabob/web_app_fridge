@@ -1,0 +1,246 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\elkab> sqlite3
+sqlite3 : The term 'sqlite3' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ sqlite3
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (sqlite3:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\elkab> dir
+
+
+    Directory: C:\Users\elkab
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        20/06/2025     23:04                .cisco
+d-----        11/07/2025     19:27                .config
+d-----        20/06/2025     23:04                .dotnet
+d-----        20/06/2025     23:04                .girlplatformer
+d-----        12/07/2025     17:17                .gnupg
+d-----        20/06/2025     23:04                .gradle
+d-----        20/06/2025     23:04                .jdks
+d-----        20/06/2025     23:04                .m2
+d-----        20/06/2025     23:04                .openjfx
+d-----        20/06/2025     23:04                .ssh
+d-----        20/06/2025     23:04                .templateengine
+d-----        11/07/2025     19:16                .VirtualBox
+d-----        20/06/2025     23:04                .vscode
+d-----        04/03/2025     17:12                ansel
+d-r---        20/06/2025     22:43                Contacts
+d-r---        20/06/2025     23:04                Desktop
+d-----        20/06/2025     23:04                Documents
+d-r---        12/07/2025     20:31                Downloads
+d-r---        20/06/2025     22:43                Favorites
+d-----        20/06/2025     23:05                go
+d-----        20/06/2025     23:05                IdeaProjects
+d-----        10/04/2025     09:54                IdeaSnapshots
+d-r---        20/06/2025     22:43                Links
+d-r---        20/06/2025     22:43                Music
+dar--l        20/06/2025     23:05                OneDrive
+d-r---        20/06/2025     23:05                Pictures
+d-----        11/07/2025     20:00                plugin_colour_jetbrains
+d-----        20/06/2025     23:05                PyCharmMiscProject
+d-r---        20/06/2025     22:43                Saved Games
+d-r---        20/06/2025     23:05                Searches
+d-----        20/06/2025     23:05                source
+d-----        20/06/2025     23:05                test_data
+d-----        20/06/2025     23:05                train_data
+d-r---        20/06/2025     23:05                Videos
+d-----        20/06/2025     23:05                VirtualBox VMs
+d-----        20/06/2025     23:07                Wallpapers
+-a----        23/04/2025     16:58            733 .bash_history
+-a----        12/07/2025     17:29            130 .git-credentials
+-a----        12/07/2025     17:09            211 .gitconfig
+-a----        16/04/2025     03:51             20 .lesshst
+-a----        12/07/2025     17:29          24603 .viminfo
+-a----        06/02/2025     16:29           7513 input.ppm
+-a----        03/04/2025     15:26         402235 java_error_in_idea_17528.log
+-a----        26/03/2025     22:12         412757 java_error_in_idea_46352.log
+-a----        06/02/2025     16:29             34 operations.ppm
+-a----        19/02/2025     16:13            365 PyCharmMiscProject.iml
+-a----        28/04/2025     17:57              8 start
+
+
+PS C:\Users\elkab> cd ..
+PS C:\Users> cd..
+PS C:\> cd .\Instal\
+PS C:\Instal> cd .\sqlite-tools-win-x64-3500200\
+PS C:\Instal\sqlite-tools-win-x64-3500200> .\sqlite3.exe
+SQLite version 3.50.2 2025-06-28 14:00:48
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .\sqlite3.exe
+Error: unknown command or invalid arguments:  "\sqlite3.exe". Enter ".help" for help
+sqlite> .open C:\Users\elkab\projects\web_app_fridge\users.db
+Error: unable to open database "C:\Users\elkab\projects\web_app_fridge\users.db": unable to open database file
+Notice: using substitute in-memory database instead of "C:\Users\elkab\projects\web_app_fridge\users.db"
+sqlite> .tables
+sqlite> SELECT * FROM user;
+Parse error: no such table: user
+sqlite> wq
+   ...>
+   ...>
+   ...>
+   ...>
+   ...>
+   ...>
+   ...> Program interrupted.
+PS C:\Instal\sqlite-tools-win-x64-3500200> .\sqlite3.exe C:\Users\elkab\projects\web_app_fridge\users.db "SELECT * FROM user;"
+Error: unable to open database "C:\Users\elkab\projects\web_app_fridge\users.db": unable to open database file
+PS C:\Instal\sqlite-tools-win-x64-3500200> Test-Path C:\Users\elkab\projects\web_app_fridge\users.db
+False
+PS C:\Instal\sqlite-tools-win-x64-3500200> cd ..
+PS C:\Instal> cd..
+PS C:\> cd..
+PS C:\> cd..
+PS C:\> cd..
+PS C:\> Test-Path C:\Users\elkab\projects\web_app_fridge\users.db
+False
+PS C:\> cd C:\Instal\sqlite-tools-win-x64-3500200\
+PS C:\Instal\sqlite-tools-win-x64-3500200> .\sqlite3.exe C:\Users\elkab\projects\web_app_fridge\users.db
+SQLite version 3.50.2 2025-06-28 14:00:48
+Enter ".help" for usage hints.
+sqlite> .tables
+Error: unable to open database "C:\Users\elkab\projects\web_app_fridge\users.db": unable to open database file
+PS C:\Instal\sqlite-tools-win-x64-3500200> app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config[SQLALCHEMY_DATABASE_URI] : The term 'app.config[SQLALCHEMY_DATABASE_URI]' is not recognized as the name of
+a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included,
+verify that the path is correct and try again.
+At line:1 char:1
++ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app.config[SQLALCHEMY_DATABASE_URI]:String) [], CommandNotFoundExceptio
+   n
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Instal\sqlite-tools-win-x64-3500200> app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///path/to/users.db'
+app.config[SQLALCHEMY_DATABASE_URI] : The term 'app.config[SQLALCHEMY_DATABASE_URI]' is not recognized as the name of
+a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included,
+verify that the path is correct and try again.
+At line:1 char:1
++ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///path/to/users.db'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app.config[SQLALCHEMY_DATABASE_URI]:String) [], CommandNotFoundExceptio
+   n
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Instal\sqlite-tools-win-x64-3500200> Test-Path C:\Users\elkab\projects\web_app_fridge\users.db
+False
+PS C:\Instal\sqlite-tools-win-x64-3500200> False
+False : The term 'False' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ False
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (False:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Instal\sqlite-tools-win-x64-3500200> Test-Path D:\Documents\AB\projects\web_app_fridge\instance\users.db
+True
+PS C:\Instal\sqlite-tools-win-x64-3500200> cd C:\Instal\sqlite-tools-win-x64-3500200\
+PS C:\Instal\sqlite-tools-win-x64-3500200> .\sqlite3.exe C:\Users\elkab\projects\web_app_fridge\users.db
+SQLite version 3.50.2 2025-06-28 14:00:48
+Enter ".help" for usage hints.
+sqlite> .help
+.archive ...             Manage SQL archives
+.auth ON|OFF             Show authorizer callbacks
+.backup ?DB? FILE        Backup DB (default "main") to FILE
+.bail on|off             Stop after hitting an error.  Default OFF
+.cd DIRECTORY            Change the working directory to DIRECTORY
+.changes on|off          Show number of rows changed by SQL
+.check GLOB              Fail if output since .testcase does not match
+.clone NEWDB             Clone data into NEWDB from the existing database
+.connection [close] [#]  Open or close an auxiliary database connection
+.crlf ?on|off?           Whether or not to use \r\n line endings
+.databases               List names and files of attached databases
+.dbconfig ?op? ?val?     List or change sqlite3_db_config() options
+.dbinfo ?DB?             Show status information about the database
+.dbtotxt                 Hex dump of the database file
+.dump ?OBJECTS?          Render database content as SQL
+.echo on|off             Turn command echo on or off
+.eqp on|off|full|...     Enable or disable automatic EXPLAIN QUERY PLAN
+.excel                   Display the output of next command in spreadsheet
+.exit ?CODE?             Exit this program with return-code CODE
+.expert                  EXPERIMENTAL. Suggest indexes for queries
+.explain ?on|off|auto?   Change the EXPLAIN formatting mode.  Default: auto
+.filectrl CMD ...        Run various sqlite3_file_control() operations
+.fullschema ?--indent?   Show schema and the content of sqlite_stat tables
+.headers on|off          Turn display of headers on or off
+.help ?-all? ?PATTERN?   Show help text for PATTERN
+.import FILE TABLE       Import data from FILE into TABLE
+.indexes ?TABLE?         Show names of indexes
+.intck ?STEPS_PER_UNLOCK?  Run an incremental integrity check on the db
+.limit ?LIMIT? ?VAL?     Display or change the value of an SQLITE_LIMIT
+.lint OPTIONS            Report potential schema issues.
+.load FILE ?ENTRY?       Load an extension library
+.log FILE|on|off         Turn logging on or off.  FILE can be stderr/stdout
+.mode ?MODE? ?OPTIONS?   Set output mode
+.nonce STRING            Suspend safe mode for one command if nonce matches
+.nullvalue STRING        Use STRING in place of NULL values
+.once ?OPTIONS? ?FILE?   Output for the next SQL command only to FILE
+.open ?OPTIONS? ?FILE?   Close existing database and reopen FILE
+.output ?FILE?           Send output to FILE or stdout if FILE is omitted
+.parameter CMD ...       Manage SQL parameter bindings
+.print STRING...         Print literal STRING
+.progress N              Invoke progress handler after every N opcodes
+.prompt MAIN CONTINUE    Replace the standard prompts
+.quit                    Stop interpreting input stream, exit if primary.
+.read FILE               Read input from FILE or command output
+.recover                 Recover as much data as possible from corrupt db.
+.restore ?DB? FILE       Restore content of DB (default "main") from FILE
+.save ?OPTIONS? FILE     Write database to FILE (an alias for .backup ...)
+.scanstats on|off|est    Turn sqlite3_stmt_scanstatus() metrics on or off
+.schema ?PATTERN?        Show the CREATE statements matching PATTERN
+.separator COL ?ROW?     Change the column and row separators
+.session ?NAME? CMD ...  Create or control sessions
+.sha3sum ...             Compute a SHA3 hash of database content
+.shell CMD ARGS...       Run CMD ARGS... in a system shell
+.show                    Show the current values for various settings
+.stats ?ARG?             Show stats or turn stats on or off
+.system CMD ARGS...      Run CMD ARGS... in a system shell
+.tables ?TABLE?          List names of tables matching LIKE pattern TABLE
+.timeout MS              Try opening locked tables for MS milliseconds
+.timer on|off            Turn SQL timer on or off
+.trace ?OPTIONS?         Output each SQL statement as it is run
+.version                 Show source, library and compiler versions
+.vfsinfo ?AUX?           Information about the top-level VFS
+.vfslist                 List all available VFSes
+.vfsname ?AUX?           Print the name of the VFS stack
+.width NUM1 NUM2 ...     Set minimum column widths for columnar output
+.www                     Display output of the next command in web browser
+sqlite> D:\Documents\AB\projects\web_app_fridge\instance\users.db
+   ...> .\sqlite3.exe "D:\Documents\AB\projects\web_app_fridge\instance\users.db"
+   ...> Program interrupted.
+PS C:\Instal\sqlite-tools-win-x64-3500200> D:\Documents\AB\projects\web_app_fridge\instance\users.db
+Program 'users.db' failed to run: No application is associated with the specified file for this operationAt line:1
+char:1
++ D:\Documents\AB\projects\web_app_fridge\instance\users.db
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+At line:1 char:1
++ D:\Documents\AB\projects\web_app_fridge\instance\users.db
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException
+    + FullyQualifiedErrorId : NativeCommandFailed
+
+PS C:\Instal\sqlite-tools-win-x64-3500200> Test-Path D:\Documents\AB\projects\web_app_fridge\instance\users.db
+True
+PS C:\Instal\sqlite-tools-win-x64-3500200> .\sqlite3.exe D:\Documents\AB\projects\web_app_fridge\instance\users.db
+SQLite version 3.50.2 2025-06-28 14:00:48
+Enter ".help" for usage hints.
+sqlite> .tables
+user
+sqlite> SELECT * FROM user;
+1|admin|scrypt:32768:8:1$wuvaZ5NSNczW1ytL$6285f0b125368dcec1c7c101f0338596c5a4d78d14c3332d45d0cdd4a3a367fcfc01ff4fe816e7226bafaf2818fde30445d9316d13194cf36477bdb66485c8ea
+sqlite> SELECT * FROM user;
+1|admin|scrypt:32768:8:1$wuvaZ5NSNczW1ytL$6285f0b125368dcec1c7c101f0338596c5a4d78d14c3332d45d0cdd4a3a367fcfc01ff4fe816e7226bafaf2818fde30445d9316d13194cf36477bdb66485c8ea
+2|tuciacik|scrypt:32768:8:1$Vh2T2qoXUqwCOaUd$c902d0e5a2eeaae7a770592999d5dcb7989d20ea9899fac6a72dad0e2fc765b9be03e3a5ef53578e5be61116e216f80517e4bae5245c4e5fd4d7d0e226ac35c2
+sqlite>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML a CSS Základy - Cheatsheet</title>
+    <style>
+        /* === 1. ZÁKLADY LAYOUTU === */
+        body {
+            font-family: Arial, sans-serif;    /* Typ písma */
+            margin: 0;                        /* Odstráni okraje */
+            padding: 20px;                    /* Vnútorný odstup */
+            background-color: #f5f5f5;       /* Farba pozadia */
+        }
+
+        /* KONTAJNER - hlavný obal obsahu */
+        .container {
+            max-width: 800px;                /* Maximálna šírka */
+            margin: 0 auto;                  /* Vycentruje horizontálne */
+            background: white;               /* Biele pozadie */
+            padding: 20px;                   /* Vnútorný odstup */
+            border-radius: 8px;              /* Zaoblené rohy */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Tieň */
+        }
+
+        /* === 2. TEXTY A NADPISY === */
+        h1 {
+            color: #333;                     /* Farba textu */
+            text-align: center;              /* Vycentruje text */
+            margin-bottom: 30px;             /* Spodný odstup */
+            font-size: 28px;                 /* Veľkosť písma */
+        }
+
+        h2 {
+            color: #4CAF50;                  /* Zelená farba */
+            border-bottom: 2px solid #4CAF50; /* Spodná čiara */
+            padding-bottom: 10px;            /* Odstup pod textom */
+        }
+
+        p {
+            line-height: 1.6;               /* Výška riadku */
+            color: #666;                     /* Sivá farba */
+            margin: 15px 0;                  /* Horný a spodný odstup */
+        }
+
+        /* === 3. TLAČIDLÁ === */
+        .btn {
+            background: #4CAF50;             /* Zelené pozadie */
+            color: white;                    /* Biely text */
+            padding: 12px 24px;              /* Vnútorný odstup (hore-dole, ľavo-pravo) */
+            border: none;                    /* Bez okraja */
+            border-radius: 5px;              /* Zaoblené rohy */
+            cursor: pointer;                 /* Kurzor ruky */
+            font-size: 16px;                 /* Veľkosť písma */
+            transition: background 0.3s;     /* Plynulá zmena farby */
+        }
+
+        .btn:hover {
+            background: #45a049;             /* Tmavšia farba pri hover */
+        }
+
+        .btn-red {
+            background: #f44336;             /* Červená */
+        }
+
+        .btn-red:hover {
+            background: #d32f2f;             /* Tmavšia červená */
+        }
+
+        .btn-blue {
+            background: #2196F3;             /* Modrá */
+        }
+
+        /* === 4. FORMULÁRE === */
+        .form-group {
+            margin-bottom: 20px;             /* Odstup medzi poliami */
+        }
+
+        label {
+            display: block;                  /* Každý label na novom riadku */
+            margin-bottom: 5px;              /* Spodný odstup */
+            font-weight: bold;               /* Tučné písmo */
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;                     /* Celá šírka */
+            padding: 10px;                   /* Vnútorný odstup */
+            border: 1px solid #ddd;          /* Sivý okraj */
+            border-radius: 4px;              /* Zaoblené rohy */
+            font-size: 16px;                 /* Veľkosť písma */
+            box-sizing: border-box;          /* Počíta padding do šírky */
+        }
+
+        input:focus {
+            border-color: #4CAF50;           /* Zelený okraj pri fokuse */
+            outline: none;                   /* Odstráni default outline */
+        }
+
+        /* === 5. KARTY/BOXY === */
+        .card {
+            border: 1px solid #ddd;          /* Sivý okraj */
+            padding: 20px;                   /* Vnútorný odstup */
+            margin: 15px 0;                  /* Horný a spodný odstup */
+            border-radius: 8px;              /* Zaoblené rohy */
+            background: #fafafa;             /* Svetlosivé pozadie */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Jemný tieň */
+        }
+
+        .card-green {
+            background: #e8f5e8;             /* Svetlozelené pozadie */
+            border-color: #c8e6c9;           /* Zelený okraj */
+        }
+
+        .card-blue {
+            background: #e3f2fd;             /* Svetlomodré pozadie */
+            border-color: #bbdefb;           /* Modrý okraj */
+        }
+
+        /* === 6. FLEXBOX - ROZLOŽENIE === */
+        .flex-container {
+            display: flex;                   /* Flex layout */
+            gap: 20px;                       /* Medzery medzi prvkami */
+            flex-wrap: wrap;                 /* Prelamuje na nový riadok */
+        }
+
+        .flex-item {
+            flex: 1;                         /* Rovnako veľké časti */
+            min-width: 250px;                /* Minimálna šírka */
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center;          /* Centruje horizontálne */
+            align-items: center;              /* Centruje vertikálne */
+        }
+
+        /* === 7. GRID - MRIEŽKA === */
+        .grid-container {
+            display: grid;                   /* Grid layout */
+            grid-template-columns: 1fr 1fr;  /* Dva stĺpce rovnakej šírky */
+            gap: 20px;                       /* Medzery */
+        }
+
+        .grid-three {
+            grid-template-columns: 1fr 1fr 1fr; /* Tri stĺpce */
+        }
+
+        /* === 8. POZICOVANIE === */
+        .relative {
+            position: relative;              /* Relatívne pozicovanie */
+        }
+
+        .absolute {
+            position: absolute;              /* Absolútne pozicovanie */
+            top: 10px;                       /* Od vrchu */
+            right: 10px;                     /* Od pravej strany */
+        }
+
+        .fixed {
+            position: fixed;                 /* Fixné pozicovanie */
+            top: 0;                          /* Prilepené na vrch */
+            width: 100%;                     /* Celá šírka */
+            background: white;               /* Biele pozadie */
+            z-index: 1000;                   /* Nad ostatnými prvkami */
+        }
+
+        /* === 9. RESPONZÍVNOSŤ === */
+        @media (max-width: 768px) {          /* Pre mobily */
+            .container {
+                padding: 10px;               /* Menší padding */
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;  /* Jeden stĺpec */
+            }
+
+            .flex-container {
+                flex-direction: column;      /* Prvky pod sebou */
+            }
+        }
+
+        /* === 10. UŽITOČNÉ TRIEDY === */
+        .text-center { text-align: center; }        /* Centrovaný text */
+        .text-left { text-align: left; }            /* Text vľavo */
+        .text-right { text-align: right; }          /* Text vpravo */
+
+        .margin-top { margin-top: 20px; }           /* Horný odstup */
+        .margin-bottom { margin-bottom: 20px; }     /* Spodný odstup */
+        .no-margin { margin: 0; }                   /* Bez odstupov */
+
+        .padding { padding: 20px; }                 /* Vnútorný odstup */
+        .no-padding { padding: 0; }                 /* Bez vnútorného odstupu */
+
+        .hidden { display: none; }                  /* Skryté */
+        .visible { display: block; }                /* Viditeľné */
+
+        .float-left { float: left; }                /* Plávanie vľavo */
+        .float-right { float: right; }              /* Plávanie vpravo */
+        .clear { clear: both; }                     /* Zruší plávanie */
+
+        /* === UKÁŽKY === */
+        .demo-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            background: #f9f9f9;
+        }
+
+        .color-box {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .red { background: #f44336; }
+        .green { background: #4CAF50; }
+        .blue { background: #2196F3; }
+        .yellow { background: #ffeb3b; }
+        .purple { background: #9c27b0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 HTML a CSS Základy - Jednoduchý Cheatsheet</h1>
+
+        <!-- NADPISY -->
+        <div class="demo-section">
+            <h2>1. Nadpisy a Text</h2>
+            <h1>Nadpis H1 - najväčší</h1>
+            <h2>Nadpis H2 - veľký</h2>
+            <h3>Nadpis H3 - stredný</h3>
+            <p>Obyčajný text v paragraphe. Môžeš meniť <strong>tučné</strong> a <em>kurzíva</em>.</p>
+            <p class="text-center">Centrovaný text</p>
+            <p class="text-right">Text vpravo</p>
+        </div>
+
+        <!-- TLAČIDLÁ -->
+        <div class="demo-section">
+            <h2>2. Tlačidlá</h2>
+            <button class="btn">Základné tlačidlo</button>
+            <button class="btn btn-red">Červené tlačidlo</button>
+            <button class="btn btn-blue">Modré tlačidlo</button>
+        </div>
+
+        <!-- FORMULÁRE -->
+        <div class="demo-section">
+            <h2>3. Formuláre</h2>
+            <div class="form-group">
+                <label for="name">Meno:</label>
+                <input type="text" id="name" placeholder="Zadaj svoje meno">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="tvoj@email.com">
+            </div>
+            <button class="btn">Odoslať</button>
+        </div>
+
+        <!-- KARTY -->
+        <div class="demo-section">
+            <h2>4. Karty/Boxy</h2>
+            <div class="card">
+                <h3>Základná karta</h3>
+                <p>Toto je obsah karty. Môžeš sem dať čokoľvek.</p>
+            </div>
+            <div class="card card-green">
+                <h3>Zelená karta</h3>
+                <p>Karta so zeleným pozadím.</p>
+            </div>
+            <div class="card card-blue">
+                <h3>Modrá karta</h3>
+                <p>Karta s modrým pozadím.</p>
+            </div>
+        </div>
+
+        <!-- FLEXBOX -->
+        <div class="demo-section">
+            <h2>5. Flexbox - Rozloženie vedľa seba</h2>
+            <div class="flex-container">
+                <div class="flex-item card">
+                    <h4>Prvý box</h4>
+                    <p>Obsah prvého boxu.</p>
+                </div>
+                <div class="flex-item card">
+                    <h4>Druhý box</h4>
+                    <p>Obsah druhého boxu.</p>
+                </div>
+                <div class="flex-item card">
+                    <h4>Tretí box</h4>
+                    <p>Obsah tretieho boxu.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="demo-section">
+            <h2>6. Grid - Mriežka</h2>
+            <div class="grid-container">
+                <div class="card">Grid položka 1</div>
+                <div class="card">Grid položka 2</div>
+                <div class="card">Grid položka 3</div>
+                <div class="card">Grid položka 4</div>
+            </div>
+        </div>
+
+        <!-- FARBY -->
+        <div class="demo-section">
+            <h2>7. Farby</h2>
+            <div class="color-box red"></div>
+            <div class="color-box green"></div>
+            <div class="color-box blue"></div>
+            <div class="color-box yellow"></div>
+            <div class="color-box purple"></div>
+        </div>
+
+        <!-- QUICK REFERENCE -->
+        <div class="demo-section">
+            <h2>🚀 Rýchla referencia</h2>
+            <h3>Často používané CSS vlastnosti:</h3>
+            <ul>
+                <li><strong>background:</strong> farba pozadia</li>
+                <li><strong>color:</strong> farba textu</li>
+                <li><strong>padding:</strong> vnútorný odstup</li>
+                <li><strong>margin:</strong> vonkajší odstup</li>
+                <li><strong>border:</strong> okraj</li>
+                <li><strong>border-radius:</strong> zaoblené rohy</li>
+                <li><strong>width/height:</strong> šírka/výška</li>
+                <li><strong>display:</strong> ako sa prvok zobrazuje</li>
+                <li><strong>text-align:</strong> zarovnanie textu</li>
+                <li><strong>font-size:</strong> veľkosť písma</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

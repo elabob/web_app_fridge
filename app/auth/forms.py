@@ -26,3 +26,7 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Nové heslo', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Zopakuj nové heslo', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Zmeniť heslo')
+
+class CreateFridgeForm(FlaskForm):
+    name = StringField('Názov chladničky', validators=[DataRequired(), Length(min=2, max=100)])
+    submit = SubmitField('Vytvoriť chladničku')

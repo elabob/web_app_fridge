@@ -5,6 +5,32 @@
     <title>Vitajte</title>
 </head>
 <body>
+<style>
+    .form-group {
+            margin-bottom: 20px;             /* Odstup medzi poliami */
+        }
+
+        label {
+            display: block;                  /* Každý label na novom riadku */
+            margin-bottom: 5px;              /* Spodný odstup */
+            font-weight: bold;               /* Tučné písmo */
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;                     /* Celá šírka */
+            padding: 10px;                   /* Vnútorný odstup */
+            border: 1px solid #ddd;          /* Sivý okraj */
+            border-radius: 4px;              /* Zaoblené rohy */
+            font-size: 16px;                 /* Veľkosť písma */
+            box-sizing: border-box;          /* Počíta padding do šírky */
+        }
+
+        input:focus {
+            border-color: #4CAF50;           /* Zelený okraj pri fokuse */
+            outline: none;                   /* Odstráni default outline */
+        }
+
     <h1>Vitajte na našej stránke!</h1>
     <p>Vyberte si možnosť:</p>
     <a href="{{ url_for('auth.login') }}"><button>Prihlásiť sa</button></a>
