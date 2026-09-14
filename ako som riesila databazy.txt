@@ -13,62 +13,6 @@ At line:1 char:1
     + FullyQualifiedErrorId : CommandNotFoundException
 
 PS C:\Users\elkab> dir
-
-
-    Directory: C:\Users\elkab
-
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
-d-----        20/06/2025     23:04                .cisco
-d-----        11/07/2025     19:27                .config
-d-----        20/06/2025     23:04                .dotnet
-d-----        20/06/2025     23:04                .girlplatformer
-d-----        12/07/2025     17:17                .gnupg
-d-----        20/06/2025     23:04                .gradle
-d-----        20/06/2025     23:04                .jdks
-d-----        20/06/2025     23:04                .m2
-d-----        20/06/2025     23:04                .openjfx
-d-----        20/06/2025     23:04                .ssh
-d-----        20/06/2025     23:04                .templateengine
-d-----        11/07/2025     19:16                .VirtualBox
-d-----        20/06/2025     23:04                .vscode
-d-----        04/03/2025     17:12                ansel
-d-r---        20/06/2025     22:43                Contacts
-d-r---        20/06/2025     23:04                Desktop
-d-----        20/06/2025     23:04                Documents
-d-r---        12/07/2025     20:31                Downloads
-d-r---        20/06/2025     22:43                Favorites
-d-----        20/06/2025     23:05                go
-d-----        20/06/2025     23:05                IdeaProjects
-d-----        10/04/2025     09:54                IdeaSnapshots
-d-r---        20/06/2025     22:43                Links
-d-r---        20/06/2025     22:43                Music
-dar--l        20/06/2025     23:05                OneDrive
-d-r---        20/06/2025     23:05                Pictures
-d-----        11/07/2025     20:00                plugin_colour_jetbrains
-d-----        20/06/2025     23:05                PyCharmMiscProject
-d-r---        20/06/2025     22:43                Saved Games
-d-r---        20/06/2025     23:05                Searches
-d-----        20/06/2025     23:05                source
-d-----        20/06/2025     23:05                test_data
-d-----        20/06/2025     23:05                train_data
-d-r---        20/06/2025     23:05                Videos
-d-----        20/06/2025     23:05                VirtualBox VMs
-d-----        20/06/2025     23:07                Wallpapers
--a----        23/04/2025     16:58            733 .bash_history
--a----        12/07/2025     17:29            130 .git-credentials
--a----        12/07/2025     17:09            211 .gitconfig
--a----        16/04/2025     03:51             20 .lesshst
--a----        12/07/2025     17:29          24603 .viminfo
--a----        06/02/2025     16:29           7513 input.ppm
--a----        03/04/2025     15:26         402235 java_error_in_idea_17528.log
--a----        26/03/2025     22:12         412757 java_error_in_idea_46352.log
--a----        06/02/2025     16:29             34 operations.ppm
--a----        19/02/2025     16:13            365 PyCharmMiscProject.iml
--a----        28/04/2025     17:57              8 start
-
-
 PS C:\Users\elkab> cd ..
 PS C:\Users> cd..
 PS C:\> cd .\Instal\
