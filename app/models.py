@@ -44,3 +44,24 @@ class FridgeUser(db.Model):
     # vztahy
     user = db.relationship('User', backref='fridge_memberships')
     fridge = db.relationship('Fridge', backref='members')
+
+
+class FridgeItem(db.Model):
+    #zakladne informacie o polozke-----------------------
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)    #nullable = false znamena ze nie je mozne ho nedat == je povinne pole
+    quantity = db.Column(db.Float, default=1.0)  # mnozstvo (desatinne cislo, predvolene 1.0)
+    unit = db.Column(db.String(20), default='ks')  # jednotka (ks, kg, l, g...)
+    category = db.Column(db.String(50))  # kategoria (mlieko, maso, zelenina...); nepovinna
+
+    #datumy---------------------
+    expiry_date = db.Column(db.Date)  # datum spotreby; nepovinne
+    added_date = db.Column(db.DateTime, default=db.func.current_timestamp())        #automaticky aktualny cas - vidis kolko dni je nieco v chladnicke, mozes ich zoradit - co spotrebovat ako prve
+
+    #prepojenia na ibe tabulky v databaze------------
+    fridge_id = db.Column(db.Integer, db.ForeignKey('fridge.id'), nullable=False)    #id chladnicky
+    added_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)      #id pouzivatela
+
+    # vztahy-kazda polozka patri do konkretnej chaldnicky a ma konkretneho pouzivatela ktory ju pridal
+    fridge = db.relationship('Fridge', backref='items')     #pristup ku chladnicke itm.fridge
+    user = db.relationship('User', backref='added_items')   #pristup ku chladnicke itm.user

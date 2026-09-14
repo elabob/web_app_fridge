@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pridať položku - {{ fridge.name }}</title>
+    <style>
+        /* Zakladne resetovanie pre konzistentnost */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Hlavny kontainer - cela obrazovka s pozadim */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #191970 0%, #da70d6 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        /* Hlavny wrapper pre obsah */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Nadpis stranky */
+        .page-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Karty s priesvitnym pozadim */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Nadpisy v kartach */
+        .card h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        /* Hlavne tlacidla */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        /* Zelene tlacidlo */
+        .btn-primary {
+            background: #007AFF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
+        }
+
+        /* Modre tlacidlo pre linky */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Flash spravy */
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .flash-success {
+            background: rgba(76, 175, 80, 0.3);
+            color: #ffffff;
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
+        .flash-danger {
+            background: rgba(244, 67, 54, 0.3);
+            color: #ffffff;
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        /* Navigacia naspat */
+        .nav-back {
+            margin-bottom: 20px;
+        }
+
+        .nav-back a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-back a:hover {
+            color: white;
+        }
+
+        /* Formulár štýly */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007AFF;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Select dropdown */
+        select.form-control {
+            cursor: pointer;
+        }
+
+        select.form-control option {
+            background: #191970;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Textarea */
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Riadok s dvoma polami */
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        /* Tlačidlá formuláru */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Animacia pri nacitani */
+        .card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responzivny dizajn */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 10px;
+            }
+
+            .page-title {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Error štýly */
+        .form-error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .form-control.error {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigacia naspat -->
+        <div class="nav-back">
+            <a href="{{ url_for('auth.fridge_detail', fridge_id=fridge.id) }}">
+                ← Späť do chladničky {{ fridge.name }}
+            </a>
+        </div>
+
+        <!-- Hlavny nadpis stranky -->
+        <h1 class="page-title">📦 Pridať položku</h1>
+
+        <!-- Flash spravy -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Formulár na pridanie položky -->
+        <div class="card">
+            <h2>🥗 Nová položka do chladničky</h2>
+
+            <form method="POST" action="{{ url_for('auth.add_item', fridge_id=fridge.id) }}">
+                {{ form.hidden_tag() }}
+
+                <!-- Názov položky -->
+                <div class="form-group">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control", placeholder="Napr. Mlieko, Chléb, Jogurt...") }}
+                    {% for error in form.name.errors %}
+                        <span class="form-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <!-- Kategória a množstvo -->
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            {% if form.category is defined %}
+                                {{ form.category.label(class="form-label") }}
+                                {{ form.category(class="form-control") }}
+                                {% for error in form.category.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            {% if form.quantity is defined %}
+                                {{ form.quantity.label(class="form-label") }}
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        {{ form.quantity(class="form-control", placeholder="1") }}
+                                    </div>
+                                    <div class="form-col">
+                                        {% if form.unit is defined %}
+                                            {{ form.unit(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% for error in form.quantity.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
+                                {% if form.unit is defined %}
+                                    {% for error in form.unit.errors %}
+                                        <span class="form-error">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dátum spotreby -->
+                {% if form.expiry_date is defined %}
+                <div class="form-group">
+                    {{ form.expiry_date.label(class="form-label") }}
+                    {{ form.expiry_date(class="form-control", value="") }}
+                    {% for error in form.expiry_date.errors %}
+                        <span class="form-error">{{ error }}</span>
+                    {% endfor %}
+                    <small style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-top: 5px; display: block;">
+                        💡 Tip: Nechajte prázdne, ak položka nemá dátum spotreby
+                    </small>
+                </div>
+                {% endif %}
+
+                <!-- Poznámky -->
+                {% if form.notes is defined %}
+                <div class="form-group">
+                    {{ form.notes.label(class="form-label") }}
+                    {{ form.notes(class="form-control", placeholder="Voliteľné poznámky k položke...") }}
+                    {% for error in form.notes.errors %}
+                        <span class="form-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Tlačidlá -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ✅ Pridať položku
+                    </button>
+                    <a href="{{ url_for('auth.fridge_detail', fridge_id=fridge.id) }}" class="btn btn-secondary">
+                        ❌ Zrušiť
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Pomocné tipy -->
+        <div class="card">
+            <h2>💡 Tipy</h2>
+            <div style="color: rgba(255, 255, 255, 0.9); line-height: 1.6;">
+                <p><strong>📅 Dátum spotreby:</strong> Pomôže vám sledovať čerstvosť a minimalizovať plytvanie</p>
+                <p><strong>📦 Množstvo:</strong> Uveďte presné množstvo pre lepšie plánovanie nákupov</p>
+                <p><strong>🏷️ Kategória:</strong> Uľahčí vám neskôr hľadanie a organizáciu položiek</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
